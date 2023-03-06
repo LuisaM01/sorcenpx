@@ -1,4 +1,4 @@
-import { pool } from '../db.js'
+import { pool } from '../db'
 
 
 export const ping = async (req, res) => {
