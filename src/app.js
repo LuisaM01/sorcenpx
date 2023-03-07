@@ -1,7 +1,6 @@
 // imports
 import express from 'express';
 
-
 import usuariosRoutes from './routes/usuarios.routes.js';
 
 const app = express();
