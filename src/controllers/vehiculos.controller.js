@@ -35,11 +35,11 @@ export const getVehiculo = async (req, res) => {
 /* crear un vehiculo */
 
 export const postVehiculo = async (req, res) => {
-	const { placa, marca, modelo, color } = req.body;
+	const { id_usuarios, placa, marca, modelo, color } = req.body;
 	try {
 		const [rows] = await pool.query(
-			"INSERT INTO vehiculos (placa, marca, modelo, color) VALUES (?, ?, ?, ?)",
-			[placa, marca, modelo, color]
+			"INSERT INTO vehiculos (id_usuarios, placa, marca, modelo, color) VALUES (?, ?, ?, ?, ?)",
+			[id_usuarios, placa, marca, modelo, color]
 		);
 		res.status(200).send({
 			id: rows.insertId,
