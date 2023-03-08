@@ -51,7 +51,7 @@ export const postUsuarios = async (req, res) => {
 		});
 	} catch (error) {
 		return res.status(500).json({
-			message: "ALgo va mal",
+			message: "Algo va mal",
 		});
 	}
 };
