@@ -34,7 +34,7 @@ export const getVehiculo = async (req, res) => {
 
 /* crear un vehiculo */
 
-export const postUsuarios = async (req, res) => {
+export const postVehiculo = async (req, res) => {
 	const { placa, marca, modelo, color } = req.body;
 	try {
 		const [rows] = await pool.query(
