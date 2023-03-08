@@ -10,18 +10,18 @@ import {
 const router = Router();
 
 /* obtener todos los reportes */
-router.get('/Reportes', getReportes);
+router.get('/reportes', getReportes);
 
 /* obtener un reporte en especifico */
-router.get('/Reportes/:id', getReporte);
+router.get('/reportes/:id', getReporte);
 
 /* crear un reporte */
-router.post('/Reportes', postReporte);
+router.post('/reportes', postReporte);
 
 /* actualizar un reporte */
-router.patch('/Reportes/:id', putReporte);
+router.patch('/reportes/:id', putReporte);
 
 /* borrar un reporte */
-router.delete('/Reportes/:id', deleteReporte);
+router.delete('reportes/:id', deleteReporte);
 
 export default router;
