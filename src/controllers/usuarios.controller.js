@@ -8,7 +8,7 @@ export const getUsuarios = async (req, res) => {
 		res.status(200).json({ rows });
 	} catch (error) {
 		return res.status(500).json({
-			message: "Algo va mal",
+			message: "ALgo va mal",
 		});
 	}
 };
