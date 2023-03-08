@@ -38,7 +38,7 @@ export const postReporte = async ({ body }, res) => {
 
 	try {
 		const [rows] = await pool.query(
-			"INSERT INTO reportes (id_usuarios, descripcion) VALUES (?)",
+			"INSERT INTO reportes (id_usuarios, descripcion) VALUES (?, ?)",
 			[id_usuarios, descripcion]
 		);
 
