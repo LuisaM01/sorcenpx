@@ -1,6 +1,7 @@
 // imports
 import express from "express";
 import cors from "cors";
+import bcryptsjs from 'bcryptjs'
 
 // imported routes
 import usuariosRoutes from "./routes/usuarios.routes.js";
