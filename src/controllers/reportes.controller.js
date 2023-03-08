@@ -48,7 +48,7 @@ export const postReporte = async ({ body }, res) => {
 		});
 	} catch (error) {
 		return res.status(500).json({
-			msg: "Something went wrong!",
+			error,
 		});
 	}
 };
