@@ -34,27 +34,25 @@ export const getVehiculo = async (req, res) => {
 
 /* crear un vehiculo */
 
-export const postVehiculo = async (req, res) => {
-    const { placa, marca, modelo, color } = req.body;
-
-    try {
-        const [rows] = await pool.query(
-            "INSERT INTO vehiculos (placa, marca, modelo, color) VALUES (?, ?, ?, ?)",
-            [placa, marca, modelo, color]
-        );
-
-        res.status(200).send({
-            id: rows.insertId,
-            placa,
-            marca,
-            modelo,
-            color,
-        });
-    } catch (error) {
-        return res.status(500).json({
-            message: 'Algo no ha ocurrido bien',
-        });
-    }
+export const postUsuarios = async (req, res) => {
+	const { placa, marca, modelo, color } = req.body;
+	try {
+		const [rows] = await pool.query(
+			"INSERT INTO vehiculos (placa, marca, modelo, color) VALUES (?, ?, ?, ?)",
+			[placa, marca, modelo, color]
+		);
+		res.status(200).send({
+			id: rows.insertId,
+			placa,
+			marca,
+			modelo,
+			color,
+		});
+	} catch (error) {
+		return res.status(500).json({
+			message: "ALgo va mal",
+		});
+	}
 };
 
 /* Eliminar un vehiculo */
