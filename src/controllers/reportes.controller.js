@@ -34,12 +34,12 @@ export const getReporte = async (req, res) => {
 
 /* crear un reporte */
 export const postReporte = async ({ body }, res) => {
-	const { descripcion } = body;
+	const { id_usuarios, descripcion } = body;
 
 	try {
 		const [rows] = await pool.query(
-			"INSERT INTO reportes (descripcion) VALUES (?)",
-			[descripcion]
+			"INSERT INTO reportes (id_usuarios, descripcion) VALUES (?)",
+			[id_usuarios, descripcion]
 		);
 
 		res.status(200).send({
@@ -48,7 +48,7 @@ export const postReporte = async ({ body }, res) => {
 		});
 	} catch (error) {
 		return res.status(500).json({
-			error,
+			msg: "Something went wrong!",
 		});
 	}
 };
