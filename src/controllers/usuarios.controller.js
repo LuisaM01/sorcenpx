@@ -49,7 +49,7 @@ export const postUsuarios = async (req, res) => {
 			nombre,
 			apellido,
 			correo,
-			contrasena
+			contrasena : passHash
 		});
 	} catch (error) {
 		return res.status(500).json({
