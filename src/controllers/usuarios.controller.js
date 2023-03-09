@@ -39,7 +39,7 @@ export const getUsuario = async (req, res) => {
 export const postUsuarios = async (req, res) => {
 	const { nombre, apellido, correo, contrasena  } = req.body;
 	try {
-		let passHash = await bcryptjs.hash(contrasena, 10) 
+		let passHash = await bcryptjs.hash(contrasena, 8) 
 		const [rows] = await pool.query(
 			"INSERT INTO usuarios (nombre, apellido, correo, contrasena) VALUES (?, ?, ?, ?)",
 			[nombre, apellido, correo, contrasena]
@@ -49,7 +49,7 @@ export const postUsuarios = async (req, res) => {
 			nombre,
 			apellido,
 			correo,
-			contrasena
+			passHash
 		});
 	} catch (error) {
 		return res.status(500).json({
