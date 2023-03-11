@@ -36,6 +36,9 @@ export const getVehiculo = async (req, res) => {
 
 export const postVehiculo = async (req, res) => {
 	const { id_usuarios, placa, marca, modelo, color } = req.body;
+
+    if( !placa || !marca || !modelo || !color ) return res.status(400).json({ message : " Campos sin diligenciar, por favor, llene todos los campos " })
+
 	try {
 		const [rows] = await pool.query(
 			"INSERT INTO vehiculos (id_usuarios, placa, marca, modelo, color) VALUES (?, ?, ?, ?, ?)",

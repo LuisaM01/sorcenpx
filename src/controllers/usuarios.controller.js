@@ -1,5 +1,5 @@
 import { pool } from "../db.js";
-import bcryptjs from "bcryptjs"
+import bcrypt from "bcryptjs"
 
 /* Obtener todos los usuarios */
 export const getUsuarios = async (req, res) => {
@@ -36,27 +36,31 @@ export const getUsuario = async (req, res) => {
 };
 
 /* Crear usuarios */
-export const postUsuarios = async (req, res) => {
-	const { nombre, apellido, correo, contrasena  } = req.body;
-	try {
-		let passHash = await bcryptjs.hash(contrasena, 8) 
-		const [rows] = await pool.query(
-			"INSERT INTO usuarios (nombre, apellido, correo, contrasena) VALUES (?, ?, ?, ?)",
-			[nombre, apellido, correo, passHash]
-		);
-		res.status(200).send({
-			id: rows.insertId,
-			nombre,
-			apellido,
-			correo,
-			contrasena : passHash
-		});
-	} catch (error) {
-		return res.status(500).json({
-			message: "Algo va mal",
-			error
-		});
-	}
+export const postUsuarios = async (req, res, next) => {
+    const { nombre, apellido, correo, contrasena } = req.body;
+
+    /* Validamos que el usuario digite todos los campos y que tenga como minimo 8 digitos en la contrasena*/
+    if( !nombre || !apellido || !correo || !contrasena ) return res.status(400).json({ message : " Campos sin diligenciar, por favor, llene todos los campos " }) 
+    if (contrasena.length < 8) return res.status(400).json({ message : " La contrasena debe tener minimo 8 digitos " })
+
+	/* Verificamos si el usuario ya existe en la base de datos */
+    const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
+    if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
+
+	/* encriptamos contrasena y enviamos los datos a la base de datos */
+    try {
+        let passHash = await bcrypt.hash(contrasena, 10);
+        const [rows] = await pool.query(
+            'INSERT INTO usuarios (nombre, apellido, correo, contrasena) VALUES (?, ?, ?, ?)',
+            [nombre, apellido, correo, passHash]
+        );
+        res.status(200).json({ msg: 'usuario creado exitosamente' });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Algo va mal',
+            error,
+        });
+    }
 };
 
 /* Eliminar un usuario en especifico */

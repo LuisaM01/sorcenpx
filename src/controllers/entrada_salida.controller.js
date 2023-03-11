@@ -44,6 +44,10 @@ export const postEntrada_salida = async (req, res) => {
         hora_ingreso,
         hora_salida,
     } = req.body;
+
+    if( !fecha_ingreso || !fecha_salida || !hora_ingreso || !hora_salida ) return res.status(400).json({ message : " Campos sin diligenciar, por favor, llene todos los campos " })
+
+
     try {
         const [rows] = await pool.query(
             'INSERT INTO entrada_salida (id_usuarios, id_vehiculo, fecha_ingreso, fecha_salida, hora_ingreso, hora_salida) VALUES (?, ?, ?, ?, ?, ?)',

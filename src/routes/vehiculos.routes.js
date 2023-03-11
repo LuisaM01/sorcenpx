@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import validarToken from './validar_token.routes.js';
+
 import {
     getVehiculos,
     getVehiculo,
@@ -10,7 +12,7 @@ import {
 const router = Router();
 
 /* obtener todos los vehiculos */
-router.get('/vehiculos', getVehiculos);
+router.get('/vehiculos', validarToken, getVehiculos);
 
 /* obtener un vehiculo en especifico */
 router.get('/vehiculos/:id', getVehiculo);
