@@ -4,7 +4,8 @@ import {
     postUsuarios,
     putUsuarios,
     deleteUsuarios,
-    getUsuario
+    getUsuario,
+    putUserPassword
 } from '../controllers/usuarios.controller.js';
 
 const router = Router();
@@ -20,6 +21,9 @@ router.post('/usuarios', postUsuarios);
 
 /* ruta para actualizar un usuario */
 router.patch('/usuarios/:id', putUsuarios);
+
+/* Actualizar contrasena encriptada */
+router.put('/usuarios/:id', putUserPassword);
 
 /* ruta para eliminar un usuario */
 router.delete('/usuarios/:id', deleteUsuarios);
