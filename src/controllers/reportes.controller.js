@@ -34,17 +34,20 @@ export const getReporte = async (req, res) => {
 
 /* crear un reporte */
 export const postReporte = async ({ body }, res) => {
-	const { id_usuarios, descripcion } = body;
+	const { id_usuarios, fecha_suceso, descripcion } = body;
+
+	if(!descripcion, fecha_suceso) return res.status(400).json({ message : " Campo sin diligenciar, por favor, llene el campo " })
 
 	try {
 		const [rows] = await pool.query(
-			"INSERT INTO reportes (id_usuarios, descripcion) VALUES (?, ?)",
-			[id_usuarios, descripcion]
+			"INSERT INTO reportes (id_usuarios, fecha_suceso, descripcion) VALUES (?, ?, ?)",
+			[id_usuarios, fecha_suceso, descripcion]
 		);
 
 		res.status(200).send({
 			id: rows.insertId,
-			descripcion,
+			fecha_suceso,
+			descripcion
 		});
 	} catch (error) {
 		return res.status(500).json({
@@ -78,12 +81,12 @@ export const deleteReporte = async (req, res) => {
 /* Actualizar un reporte */
 export const putReporte = async (req, res) => {
 	const { id } = req.params;
-	const { descripcion } = req.body;
+	const { fecha_suceso, descripcion } = req.body;
 
 	try {
 		const [result] = await pool.query(
-			"UPDATE reportes SET descripcion = IFNULL(?, descripcion) WHERE id_reportes = ?",
-			[descripcion, id]
+			"UPDATE reportes SET fecha_suceso = IFNULL(?, fecha_suceso), descripcion = IFNULL(?, descripcion) WHERE id_reportes = ?",
+			[fecha_suceso, descripcion, id]
 		);
 
 		if (result.affectedRows === 0)

@@ -35,17 +35,18 @@ export const getVehiculo = async (req, res) => {
 /* crear un vehiculo */
 
 export const postVehiculo = async (req, res) => {
-	const { id_usuarios, placa, marca, modelo, color } = req.body;
+	const { id_usuarios, tipo_vehiculo, placa, marca, modelo, color } = req.body;
 
-    if( !placa || !marca || !modelo || !color ) return res.status(400).json({ message : " Campos sin diligenciar, por favor, llene todos los campos " })
+    if( !tipo_vehiculo || !placa || !marca || !modelo || !color ) return res.status(400).json({ message : " Campos sin diligenciar, por favor, llene todos los campos " })
 
 	try {
 		const [rows] = await pool.query(
-			"INSERT INTO vehiculos (id_usuarios, placa, marca, modelo, color) VALUES (?, ?, ?, ?, ?)",
-			[id_usuarios, placa, marca, modelo, color]
+			"INSERT INTO vehiculos (id_usuarios, tipo_vehiculo, placa, marca, modelo, color) VALUES (?, ?, ?, ?, ?, ?)",
+			[id_usuarios, tipo_vehiculo, placa, marca, modelo, color]
 		);
 		res.status(200).send({
 			id: rows.insertId,
+            tipo_vehiculo,
 			placa,
 			marca,
 			modelo,
@@ -81,12 +82,12 @@ export const deleteVehiculo = async (req, res) => {
 /* Actualizar un vehiculo */
 export const putVehiculo = async (req, res) => {
     const { id } = req.params;
-    const { placa, marca, modelo, color } = req.body;
+    const { tipo_vehiculo, placa, marca, modelo, color } = req.body;
 
     try {
         const [result] = await pool.query(
-            'UPDATE vehiculos SET placa = IFNULL(?, placa), marca = IFNULL(?, marca), modelo = IFNULL(?, modelo), color = IFNULL(?, color) WHERE id_vehiculo = ?',
-            [placa, marca, modelo, color, id]
+            'UPDATE vehiculos SET tipo_vehiculo = IFNULL(?, tipo_vehiculo), placa = IFNULL(?, placa), marca = IFNULL(?, marca), modelo = IFNULL(?, modelo), color = IFNULL(?, color) WHERE id_vehiculo = ?',
+            [tipo_vehiculo, placa, marca, modelo, color, id]
         );
 
         if (result.affectedRows === 0)
