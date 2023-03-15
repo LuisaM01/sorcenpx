@@ -55,7 +55,7 @@ export const postLogin = async (req, res) => {
                     apellido : users[0].apellido,
                     correo : users[0].correo 
                  },process.env.SECRET_KEY || 'Stigmata14')
-        		res.status(200).json({token})
+        		res.status(200).json(token)
 
 			})
 		}else {
