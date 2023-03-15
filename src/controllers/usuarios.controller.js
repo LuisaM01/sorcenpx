@@ -36,7 +36,7 @@ export const postUsuarios = async (req, res, next) => {
 
 	/* Verificamos si el usuario ya existe en la base de datos */
     const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
-    if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
+    if (userExists > [0]) return res.status(400).json({ message: 'El usuario ya esta registrado' });
 
 	/* encriptamos contrasena y enviamos los datos a la base de datos */
     try {
@@ -73,7 +73,7 @@ export const putUsuarios = async (req, res) => {
 
 	/* Verificamos si el usuario ya existe en la base de datos */
 	const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
-	if (userExists > [0]) return res.status(400).json({ msg: 'El correo ya esta en uso' });
+	if (userExists > [0]) return res.status(400).json({ message: 'El correo ya esta en uso' });
 
 	try {
 		const [result] = await pool.query("UPDATE usuarios SET nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), correo = IFNULL(?, correo) WHERE id_usuarios = ?",[nombre, apellido, correo, id]);

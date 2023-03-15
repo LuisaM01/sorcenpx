@@ -12,7 +12,7 @@ export const postRegister = async (req, res, next) => {
 
 	/* Verificamos si el usuario ya existe en la base de datos */
     const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
-    if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
+    if (userExists > [0]) return res.status(400).json({ message: 'El usuario ya esta registrado' });
 
 	/* encriptamos contrasena y enviamos los datos a la base de datos */
     try {
@@ -21,7 +21,7 @@ export const postRegister = async (req, res, next) => {
             'INSERT INTO usuarios (nombre, apellido, correo, contrasena) VALUES (?, ?, ?, ?)',
             [nombre, apellido, correo, passHash]
         );
-        res.status(200).json({ msg: 'usuario creado exitosamente' });
+        res.status(200).json({ message: 'usuario creado exitosamente' });
     } catch (error) {
         return res.status(500).json({
             message: 'Algo va mal',
@@ -59,7 +59,7 @@ export const postLogin = async (req, res) => {
 
 			})
 		}else {
-			return res.status(400).json({ msg: 'El usuario no esta registrado' });
+			return res.status(400).json({ message: 'El usuario no esta registrado' });
 		}
 
 	} catch (error) {
