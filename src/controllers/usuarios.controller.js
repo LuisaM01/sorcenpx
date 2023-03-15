@@ -70,12 +70,13 @@ export const deleteUsuarios = async (req, res) => {
 export const putUsuarios = async (req, res) => {
 	const { id } = req.params;
 	const { nombre, apellido, correo } = req.body;
+
+	/* Verificamos si el usuario ya existe en la base de datos */
+	const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
+	if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
+
+
 	try {
-
-		/* Verificamos si el usuario ya existe en la base de datos */
-		const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
-		if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
-
 		const [result] = await pool.query("UPDATE usuarios SET nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), correo = IFNULL(?, correo) WHERE id_usuarios = ?",[nombre, apellido, correo, id]);
 
 		if (result.affectedRows === 0)
