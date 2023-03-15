@@ -38,12 +38,6 @@ export const postUsuarios = async (req, res, next) => {
     const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
     if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
 
-	/* Validamos correo */
-	const validaremail = "/^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/"
-
-	if( correo != validaremail ) return res.status(400).json({message : "Correo invalido. Ejemplo: ejemplo@ejemplo.com"})
-
-
 	/* encriptamos contrasena y enviamos los datos a la base de datos */
     try {
         let passHash = await bcrypt.hash(contrasena, 10);
