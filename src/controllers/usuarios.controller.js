@@ -75,7 +75,6 @@ export const putUsuarios = async (req, res) => {
 	const userExists = await pool.query('SELECT * FROM usuarios WHERE correo = ?',[correo]);
 	if (userExists > [0]) return res.status(400).json({ msg: 'El usuario ya esta registrado' });
 
-
 	try {
 		const [result] = await pool.query("UPDATE usuarios SET nombre = IFNULL(?, nombre), apellido = IFNULL(?, apellido), correo = IFNULL(?, correo) WHERE id_usuarios = ?",[nombre, apellido, correo, id]);
 
