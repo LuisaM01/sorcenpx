@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import validarToken from './validar_token.routes.js';
+
 import {
     getUsuarios,
     postUsuarios,
@@ -11,7 +13,7 @@ import {
 const router = Router();
 
 /* ruta para obetener todos los usuarios */
-router.get('/usuarios', getUsuarios);
+router.get('/usuarios', validarToken, getUsuarios);
 
 /* ruta para obetener un usuario en especifico (por ID) */
 router.get('/usuarios/:id', getUsuario);
